@@ -131,75 +131,156 @@ Keep it simple and student-friendly.
   }
 };
 
-  return (
+return (
+  <div
+    style={{
+      minHeight: "100vh",
+      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "30px",
+      fontFamily: "Arial, sans-serif",
+    }}
+  >
     <div
       style={{
-        padding: "40px",
-        textAlign: "center",
-        fontFamily: "Arial",
+        backgroundColor: "#fff",
+        padding: "35px",
+        borderRadius: "20px",
+        width: "90%",
+        maxWidth: "900px",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
       }}
     >
-      <h1>AI Study Buddy</h1>
-
-      <input
-        type="file"
-        accept=".pdf"
-        onChange={handleFileChange}
-      />
-
-      <br />
-      <br />
-
-      <button
-        onClick={generateSummary}
-        disabled={loading}
+      <h1
+        style={{
+          textAlign: "center",
+          color: "#333",
+          marginBottom: "10px",
+        }}
       >
-        {loading ? "Generating..." : "Generate Summary"}
-      </button>
+        📚 AI Study Buddy
+      </h1>
 
-      <br /><br />
+      <p
+        style={{
+          textAlign: "center",
+          color: "#666",
+          marginBottom: "25px",
+        }}
+      >
+        Upload your notes PDF and instantly generate summaries, quizzes and viva questions
+      </p>
 
-      <button onClick={generateQuiz} disabled={loading}> Generate Quiz and viva
-
-      </button>
+      <div style={{ textAlign: "center" }}>
+        <input
+          type="file"
+          accept=".pdf"
+          onChange={handleFileChange}
+        />
+      </div>
 
       {fileName && (
-        <p>
+        <p
+          style={{
+            marginTop: "15px",
+            textAlign: "center",
+            color: "#444",
+          }}
+        >
           <strong>Selected File:</strong> {fileName}
         </p>
       )}
+
+      <div
+        style={{
+          display: "flex",
+          gap: "15px",
+          justifyContent: "center",
+          marginTop: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        <button
+          onClick={generateSummary}
+          disabled={loading}
+          style={{
+            backgroundColor: "#4f46e5",
+            color: "white",
+            border: "none",
+            padding: "12px 24px",
+            borderRadius: "10px",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          {loading ? "Generating..." : "Generate Summary"}
+        </button>
+
+        <button
+          onClick={generateQuiz}
+          disabled={loading}
+          style={{
+            backgroundColor: "#10b981",
+            color: "white",
+            border: "none",
+            padding: "12px 24px",
+            borderRadius: "10px",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          Generate Quiz & Viva
+        </button>
+      </div>
 
       {summary && (
         <div
           style={{
             marginTop: "30px",
-            maxWidth: "800px",
-            marginInline: "auto",
+            backgroundColor: "#f9fafb",
+            padding: "20px",
+            borderRadius: "12px",
             textAlign: "left",
-            whiteSpace: "pre-wrap",
           }}
         >
-          <h2>AI Summary</h2>
-          <p>{summary}</p>
+          <h2>📝 AI Summary</h2>
+          <p
+            style={{
+              whiteSpace: "pre-wrap",
+              lineHeight: "1.6",
+            }}
+          >
+            {summary}
+          </p>
         </div>
       )}
 
       {quiz && (
-  <div
-    style={{
-      marginTop: "30px",
-      maxWidth: "800px",
-      marginInline: "auto",
-      textAlign: "left",
-      whiteSpace: "pre-wrap",
-    }}
-  >
-    <h2>Quiz & Viva Questions</h2>
-    <p>{quiz}</p>
-  </div>
-)}
+        <div
+          style={{
+            marginTop: "25px",
+            backgroundColor: "#f9fafb",
+            padding: "20px",
+            borderRadius: "12px",
+            textAlign: "left",
+          }}
+        >
+          <h2>🎯 Quiz & Viva Questions</h2>
+          <p
+            style={{
+              whiteSpace: "pre-wrap",
+              lineHeight: "1.6",
+            }}
+          >
+            {quiz}
+          </p>
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
 }
 
 export default App;
