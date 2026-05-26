@@ -13,6 +13,7 @@ function App() {
   const [fileName, setFileName] = useState("");
   const [pdfText, setPdfText] = useState("");
   const [summary, setSummary] = useState("");
+  const [quiz, setQuiz] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleFileChange = async (event) => {
@@ -89,6 +90,47 @@ ${pdfText.slice(0, 1000)}
     }
   };
 
+  const generateQuiz = async () => {
+  if (!pdfText) {
+    alert("Please upload a PDF first");
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+    });
+
+    const prompt = `
+From the following study notes:
+
+${pdfText.slice(0, 1000)}
+
+Generate:
+
+1. 5 multiple-choice quiz questions with 4 options each
+2. 5 viva/oral exam questions
+
+Keep it simple and student-friendly.
+`;
+
+    const result = await model.generateContent(prompt);
+
+    const response = await result.response;
+
+    setQuiz(response.text());
+
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <div
       style={{
@@ -115,6 +157,12 @@ ${pdfText.slice(0, 1000)}
         {loading ? "Generating..." : "Generate Summary"}
       </button>
 
+      <br /><br />
+
+      <button onClick={generateQuiz} disabled={loading}> Generate Quiz and viva
+
+      </button>
+
       {fileName && (
         <p>
           <strong>Selected File:</strong> {fileName}
@@ -135,6 +183,21 @@ ${pdfText.slice(0, 1000)}
           <p>{summary}</p>
         </div>
       )}
+
+      {quiz && (
+  <div
+    style={{
+      marginTop: "30px",
+      maxWidth: "800px",
+      marginInline: "auto",
+      textAlign: "left",
+      whiteSpace: "pre-wrap",
+    }}
+  >
+    <h2>Quiz & Viva Questions</h2>
+    <p>{quiz}</p>
+  </div>
+)}
     </div>
   );
 }
